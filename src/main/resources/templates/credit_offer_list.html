@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+<div>
+    <a href="/"><h2 >Credit offers</h2></a>
+    <table>
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Credit</th>
+            <th>Client</th>
+            <th>Sum credit</th>
+            <th>Monthly payment</th>
+            <th>Sum percent</th>
+            <th>Total sum credit</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="creditOffer : ${creditOffers}">
+            <td th:text="${creditOffer.id}"></td>
+            <td th:text="${creditOffer.credit.percentRate} + '%'"></td>
+            <td th:text="${creditOffer.client.name}"></td>
+            <td th:text="${creditOffer.sumCredit}"></td>
+            <td th:text="${creditOffer.paymentSchedule.get(0).getSumPayment()}"></td>
+            <td th:text="${plannedPaymentService.sumPercentCredit(creditOffer.id)}"></td>
+            <td th:text="${creditOffer.sumCredit.add(plannedPaymentService.sumPercentCredit(creditOffer.id))}"></td>
+            <td><a th:href="@{creditOffer/{id}/paymentSchedule(id=${creditOffer.getId()})}">View payment schedule</a></td>
+            <td><a th:href="@{creditOffer/delete/{id}(id=${creditOffer.getId()})}">Delete</a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<p><a href="/creditOffer/create">Create credit offer</a></p>
+</div>
+</body>
+</html>

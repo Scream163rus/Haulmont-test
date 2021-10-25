@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<meta charset="UTF-8">
+<title>Update client</title>
+<head>
+    <script th:inline="JavaScript">
+
+        function add() {
+            const clientsElements = document.getElementById('clients_hidden');
+
+            const clients = [];
+
+            for (let child of clientsElements.children) {
+                clients.push({id: child.getAttribute('abbr'), name: child.textContent})
+            }
+
+            console.log(clients);
+
+            var nodet = document.createElement('tr');
+            var node = document.createElement('td');
+
+
+            const select = document.createElement('select');
+            select.id = 'banks';
+            select.name = 'banks';
+
+            for (let client of clients) {
+                const option = document.createElement('option');
+                option.value = client.id;
+                option.textContent = client.name;
+                select.add(option)
+            }
+
+            node.innerHTML = select.outerHTML;
+
+            document.getElementById('banks').appendChild(nodet);
+            nodet.appendChild(node);
+
+        }
+    </script>
+</head>
+<body>
+<div style="display: none" id="clients_hidden">
+    <span th:each="el:${banks}" th:text="${el.getName()}" data-th-abbr="${el.getId()}"></span>
+</div>
+<form action="#" th:action="@{/client/update}" th:object="${clients}" method="post">
+    <table>
+        <tr><td><label for="id">id</label></td>
+            <td><input readonly type="text" th:field="*{id}" id="id" placeholder="id"></td>
+        <tr><td><label for="Name">Name</label></td>
+            <td><input  type="text" th:field="*{name}" id="Name" placeholder="Name"></td>
+            <td  th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</td></tr>
+        <tr><td><label for="numberPhone">Number phone</label></td>
+            <td><input type="text" th:field="*{numberPhone}" id="numberPhone" placeholder="Number phone"></td>
+            <td  th:if="${#fields.hasErrors('numberPhone')}" th:errors="*{numberPhone}">Number phone Error</td></tr>
+        <tr><td><label for="email">Email</label></td>
+            <td><input type="text" th:field="*{email}" id="email" placeholder="email"></td>
+            <td  th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</td></tr></tr>
+        <tr><td><label for="passportNumber">Passport number</label></td>
+            <td><input type="text" th:field="*{passportNumber}" id="passportNumber" placeholder="Passport number"></td>
+            <td  th:if="${#fields.hasErrors('passportNumber')}" th:errors="*{passportNumber}">Passport number Error</td></tr></tr>
+        <tr><td><label for="bank">Bank</label></td>
+            <td id="banks"><div th:each="client:${clients.getBanks()}">
+                <select th:name="banks" th:id="banks" th:filed="*{banks}" id="bank">
+                <option th:text='bank' th:value='null'></option>
+                <th:block th:each="el:${banks}">
+                    <option th:if="${client.getId().equals(el.getId())}" th:value='${el.getId()}' th:text='${el.getName}' selected="selected"></option>
+                    <option th:unless="${client.getId().equals(el.getId())}" th:value='${el.getId()}' th:text='${el.getName}'></option>
+                </th:block>
+            </select></div></td><tr><td><input type='button' value='Add bank' onClick='add();'></td></tr>
+        <tr><td>  <input type="submit" value="Update client"></td></tr>
+    </table>
+
+</form>
+</body>
+</html>

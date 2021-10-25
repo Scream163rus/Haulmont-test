@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create credit offer</title>
+</head>
+<body>
+<form action="#" th:action="@{/creditOffer/create}" th:object="${creditOffer}" method="post">
+    <table>
+        <tr><td><label for="credit">Credit</label>
+            <select id = "credit" th:field="*{credit}" >
+                <option th:each="credit:${credits}" th:value="${credit.id}" th:text="${credit.percentRate} + '('+ ${credit.getBank()} +')'"></option>
+            </select></td>
+            <td  th:if="${#fields.hasErrors('credit')}" th:errors="*{credit}">Credit  Error</td>         </tr>
+        <tr><td><label for="client">Client id</label>
+            <select id = "client" th:field="*{client}" >
+                <option th:each="elclient:${clients}" th:value="${elclient.id}" th:text="${elclient.name} + '(' + ${elclient.getBanks()} + ')'"></option>
+            </select></td>
+            <td  th:if="${#fields.hasErrors('client')}" th:errors="*{client}">Client Error</td></tr>
+        <tr><td><label for="sumCredit">Sum credit</label>
+            <input type="text" th:field="*{sumCredit}" id="sumCredit" placeholder="Sum credit"></td>
+            <td  th:if="${#fields.hasErrors('sumCredit')}" th:errors="*{sumCredit}">Sum credit Error</td>
+        </tr>
+          <tr><td><label for="month">Credit term(in months)</label>
+              <input name= "month" type ="text" th:value="${month}" id="month" placeholder="Credit term(in months)"></td>
+              <td  th:if="${#fields.hasErrors('global')}" th:each="err : ${#fields.errors('global')}" th:text="${err}">Credit  Error</td>
+        <tr><td><input type="submit" value="Create credit"></td></tr>
+    </table>
+
+
+</form>
+</body>
+</html>

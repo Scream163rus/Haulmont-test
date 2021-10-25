@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<meta charset="UTF-8">
+<title>Update credit</title>
+</head>
+<body>
+<form action="#" th:action="@{/credit/update}" th:object="${credit}" method="post">
+    <table>
+        <tr><td><label for="id">Id</label></td>
+            <td><input readonly  type="text" th:field="*{id}" id="id" placeholder="id"></td></tr>
+        <tr><td><label for="creditLimit">Credit limit</label></td>
+            <td><input type="text" th:field="*{creditLimit}" id="creditLimit" placeholder="Credit limit"></td>
+            <td  th:if="${#fields.hasErrors('creditLimit')}" th:errors="*{creditLimit}">Number phone Error</td></tr>
+        <tr><td><label for="percentRate">Percent rate</label></td>
+            <td><input type="text" th:field="*{percentRate}" id="percentRate" placeholder="Percent rate"></td>
+            <td  th:if="${#fields.hasErrors('percentRate')}" th:errors="*{percentRate}">Email Error</td></tr></tr>
+        <tr><td><label for="bank">Bank</label></td>
+            <td><select  id = "bank" th:field="*{bank}" >
+                <option th:text="bank" th:value="null"></option>
+                <option  th:each="el:${banks}" th:value="${el.getId()}" th:text="${el.getName}"></option>
+            <td  th:if="${#fields.hasErrors('bank')}" th:errors="*{bank}">Percent rate Error</td></tr>
+        </select></td></tr>
+        <tr><td>  <input type="submit" value="Update credit"></td></tr>
+    </table>
+</form>
+</body>
+</html>

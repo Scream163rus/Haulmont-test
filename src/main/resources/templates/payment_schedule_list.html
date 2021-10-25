@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+<div>
+  <a href="/creditOffer"><h2 >Payment schedule</h2></a>
+  <table>
+    <thead>
+    <tr>
+      <th>Date</th>
+      <th>Sum payment</th>
+      <th>Body amount</th>
+      <th>Percent amount</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="paymentSchedule : ${paymentSchedules}">
+      <td th:text="${paymentSchedule.datePayment}"></td>
+      <td th:text="${paymentSchedule.sumPayment}"></td>
+      <td th:text="${paymentSchedule.creditBodyAmount}"></td>
+      <td th:text="${paymentSchedule.creditPercentAmount}"></td>
+    </tr>
+    </tbody>
+  </table>
+  <p><a href="/creditOffer">Back to credit offers</a></p>
+</div>
+</body>
+</html>

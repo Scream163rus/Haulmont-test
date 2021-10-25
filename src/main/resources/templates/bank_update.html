@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<meta charset="UTF-8">
+<title>Update bank</title>
+
+<script th:inline="JavaScript">
+
+    function add() {
+        const clientsElements = document.getElementById('clients_hidden');
+
+        const clients = [];
+
+        for (let child of clientsElements.children) {
+            clients.push({id: child.getAttribute('abbr'), name: child.textContent})
+        }
+
+        console.log(clients);
+
+        var nodet = document.createElement('tr');
+        var node = document.createElement('td');
+
+
+        const select = document.createElement('select');
+        select.id = 'client';
+        select.name = 'clients';
+
+        for (let client of clients) {
+            const option = document.createElement('option');
+            option.value = client.id;
+            option.textContent = client.name;
+            select.add(option)
+        }
+
+        node.innerHTML = select.outerHTML;
+
+        document.getElementById('bank').appendChild(nodet);
+        nodet.appendChild(node);
+
+    }
+</script>
+</head>
+<body>
+<div style="display: none" id="clients_hidden">
+    <span th:each="el:${clientsBank}" th:text="${el.getName()}" data-th-abbr="${el.getId()}"></span>
+</div>
+<form action="#" th:action="@{/bank/update}" th:object="${bank}" method="post">
+    <table>
+        <tr><td><label readonly for="id">Id</label></td>
+            <td><input  type="text" th:field="*{id}" id="id" placeholder="Name"></td>
+        <tr><td><label for="Name">Name</label></td>
+            <td><input  type="text" th:field="*{name}" id="Name" placeholder="Name"></td>
+            <td  th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</td></tr>
+        <tr><td><label  th:for="client">Client</label></td>
+            <td id="bank"><div th:each="bankClient:${bank.getClients()}">
+                <select th:name="clients" th:id="client" th:filed="*{clients}" id="client">
+                <option th:text='client' th:value='null'></option>
+                <th:block th:each="el:${clientsBank}">
+                    <option th:if="${bankClient.getId().equals(el.getId())}" th:value='${el.getId()}' th:text='${el.getName}' selected="selected"></option>
+                    <option th:unless="${bankClient.getId().equals(el.getId())}" th:value='${el.getId()}' th:text='${el.getName}'></option>
+                </th:block>
+            </select></div></td><tr><td><input type='button' value='Add client' onClick='add();'></td></tr>
+        </tr>
+        <tr>
+        <tr><td><input type="submit" value="Update bank"></td></tr>
+    </table>
+</form>
+</body>
+</html>

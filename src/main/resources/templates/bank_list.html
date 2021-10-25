@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+<div>
+    <a href="/"><h2 >Banks</h2></a>
+    <table>
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Clients</th>
+            <th>Credits</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="bank : ${banks}">
+            <td th:text="${bank.id}"></td>
+            <td th:text="${bank.name}"></td>
+            <td  th:text="${bank.clients}"></td>
+            <td th:text="${bank.credits}"></td>
+            <td><a th:href="@{bank/update/{id}(id=${bank.id})}">Edit</a></td>
+            <td><a th:href="@{bank/delete/{id}(id=${bank.id})}">Delete</a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<p><a href="/bank/create">Create bank</a></p>
+</div>
+</body>
+</html>

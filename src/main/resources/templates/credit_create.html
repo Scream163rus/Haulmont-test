@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create credit</title>
+</head>
+<body>
+<form action="#" th:action="@{/credit/create}" th:object="${credit}" method="post">
+    <table>
+        <tr>
+            <td><label for="creditLimit">Credit limit</label></td>
+            <td><input  type="text" th:field="*{creditLimit}" id="creditLimit" placeholder="Credit limit"></td>
+            <td  th:if="${#fields.hasErrors('creditLimit')}" th:errors="*{creditLimit}">Credit limit Error</td></tr>
+        <tr><td><label for="percentRate">Percent rate</label></td>
+            <td><input type="text" th:field="*{percentRate}" id="percentRate" placeholder="Percent rate"></td>
+            <td  th:if="${#fields.hasErrors('percentRate')}" th:errors="*{percentRate}">Percent rate Error</td></tr>
+        <tr><td><label for="bank">Bank</label></td>
+            <td><select  id = "bank" th:field="*{bank}" >
+                <option th:text="bank" th:value="null"></option>
+                <option  th:each="el:${banks}" th:value="${el.getId()}" th:text="${el.getName}"></option>
+            <td  th:if="${#fields.hasErrors('bank')}" th:errors="*{bank}">Percent rate Error</td></tr>
+            </select></td></tr>
+        <tr><td><input type="submit" value="Create credit"></td></tr>
+    </table>
+</form>
+</body>
+</html>

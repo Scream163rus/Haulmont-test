@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+<div>
+    <a href="/"><h2 >Credits</h2></a>
+    <table>
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Credit limit</th>
+            <th>Percent rate</th>
+            <th>Bank</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="credit : ${credits}">
+            <td th:text="${credit.id}"></td>
+            <td th:text="${credit.creditLimit}"></td>
+            <td th:text="${credit.percentRate}"></td>
+            <td th:text="${credit.bank.name}"></td>
+            <td><a th:href="@{credit/update/{id}(id=${credit.getId()})}">Edit</a></td>
+            <td><a th:href="@{credit/delete/{id}(id=${credit.getId()})}">Delete</a></td>
+        </tr>
+        </tbody>
+    </table>
+<p><a href="/credit/create">Create credit</a></p>
+</div>
+</body>
+</html>
